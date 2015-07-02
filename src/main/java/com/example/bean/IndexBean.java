@@ -25,7 +25,7 @@ public class IndexBean implements Serializable {
     public String send() {
         long start = System.currentTimeMillis();
         List<Order> orders = orderService.listOrders();
-        long time = System.currentTimeMillis()- start;
+        long time = System.currentTimeMillis() - start;
         Flash flash = FacesContext.getCurrentInstance()
                 .getExternalContext()
                 .getFlash();
