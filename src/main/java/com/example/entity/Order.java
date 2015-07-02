@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
@@ -19,19 +20,22 @@ import lombok.Setter;
 @Entity
 @Table(name = "T_ORDER")
 @Getter @Setter
-@NamedEntityGraph(
-        name = "Order.hoge",
-        attributeNodes = {
-            @NamedAttributeNode(value = "orderItems", subgraph = "OrderItem.hoge")
-        }
-)
+//@NamedEntityGraph(
+//        name = "Order.hoge",
+//        attributeNodes = {
+//            @NamedAttributeNode(value = "orderItems", subgraph = "OrderItem.hoge")
+//        }
+//)
 public class Order implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
     private Long id;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "order", 
+            cascade = CascadeType.ALL, 
+            orphanRemoval = true,
+            fetch = FetchType.LAZY)
     private List<OrderItem> orderItems;
     
     @Override

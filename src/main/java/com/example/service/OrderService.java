@@ -24,6 +24,7 @@ public class OrderService implements Serializable {
     private EntityManager em;
     
     public List<Order> listOrders() {
+        System.out.println("=====================");
         EntityGraph<Order> rootOrderGraph = em.createEntityGraph(Order.class);
         Subgraph<OrderItem> orderItemSubgraph = rootOrderGraph.addSubgraph("orderItems");
         Subgraph<Item> itemSubgraph = orderItemSubgraph.addSubgraph("item");

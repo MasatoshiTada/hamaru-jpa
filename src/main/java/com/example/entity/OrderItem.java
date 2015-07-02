@@ -19,12 +19,12 @@ import lombok.Setter;
 @Entity
 @Table(name = "T_ORDER_ITEM")
 @Getter @Setter
-@NamedEntityGraph(
-        name = "OrderItem.hoge",
-        attributeNodes = {
-            @NamedAttributeNode(value = "item", subgraph = "Item.hoge")
-        }
-)
+//@NamedEntityGraph(
+//        name = "OrderItem.hoge",
+//        attributeNodes = {
+//            @NamedAttributeNode(value = "item", subgraph = "Item.hoge")
+//        }
+//)
 public class OrderItem implements Serializable {
     private static final long serialVersionUID = 1L;
     
