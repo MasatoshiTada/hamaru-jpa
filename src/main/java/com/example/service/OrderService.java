@@ -24,17 +24,15 @@ public class OrderService implements Serializable {
     private EntityManager em;
     
     public List<Order> listOrders() {
-        System.out.println("=====================");
         EntityGraph<Order> rootOrderGraph = em.createEntityGraph(Order.class);
         Subgraph<OrderItem> orderItemSubgraph = rootOrderGraph.addSubgraph("orderItems");
         Subgraph<Item> itemSubgraph = orderItemSubgraph.addSubgraph("item");
-//        itemSubgraph.addAttributeNodes("name");
         
         TypedQuery<Order> query = em.createQuery(
-                "SELECT o FROM Order o ORDER BY o.id", 
+                "SELECT DISTINCT o FROM Order o ORDER BY o.id", 
                 Order.class);
         query.setHint("javax.persistence.fetchgraph", rootOrderGraph);
-        
-        return query.getResultList();
+        List<Order> orders = query.getResultList();
+        return orders;
     }
 }
