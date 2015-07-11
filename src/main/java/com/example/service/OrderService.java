@@ -9,6 +9,8 @@ import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import javax.persistence.EntityGraph;
 import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
+import javax.persistence.PersistenceUtil;
 import javax.persistence.Subgraph;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
@@ -24,17 +26,22 @@ public class OrderService implements Serializable {
     private EntityManager em;
     
     public List<Order> listOrders() {
-        System.out.println("=====================");
         EntityGraph<Order> rootOrderGraph = em.createEntityGraph(Order.class);
         Subgraph<OrderItem> orderItemSubgraph = rootOrderGraph.addSubgraph("orderItems");
         Subgraph<Item> itemSubgraph = orderItemSubgraph.addSubgraph("item");
-        itemSubgraph.addAttributeNodes("name");
         
         TypedQuery<Order> query = em.createQuery(
-                "SELECT o FROM Order o ORDER BY o.id", 
+                "SELECT DISTINCT o FROM Order o ORDER BY o.id", 
                 Order.class);
-        query.setHint("javax.persistence.fetchgraph", rootOrderGraph);
+        query.setHint("javax.persistence.loadgraph", rootOrderGraph);
+        List<Order> orders = query.getResultList();
         
-        return query.getResultList();
+        PersistenceUtil util = Persistence.getPersistenceUtil();
+        System.out.println("=====================================================================");
+        System.out.println("orderItems loaded: " + util.isLoaded(orders.get(0), "orderItems"));
+        System.out.println("orderItems.item loaded: " + util.isLoaded(orders.get(0), "orderItems.item"));
+        System.out.println("=====================================================================");
+        
+        return orders;
     }
 }

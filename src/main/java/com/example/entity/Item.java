@@ -6,12 +6,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.NamedAttributeNode;
-import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  *
@@ -19,8 +15,6 @@ import lombok.Setter;
  */
 @Entity
 @Table(name = "T_ITEM")
-@Getter @Setter
-//@NamedEntityGraph(name = "Item.hoge", includeAllAttributes = true)
 public class Item implements Serializable {
     private static final long serialVersionUID = 1L;
     
@@ -34,11 +28,53 @@ public class Item implements Serializable {
             orphanRemoval = true,
             fetch = FetchType.LAZY)
     private List<OrderItem> orderItems;
+
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * @param name the name to set
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * @return the orderItems
+     */
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+
+    /**
+     * @param orderItems the orderItems to set
+     */
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
+    }
     
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (getId() != null ? getId().hashCode() : 0);
         return hash;
     }
 
@@ -49,10 +85,9 @@ public class Item implements Serializable {
             return false;
         }
         Item other = (Item) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if ((this.getId() == null && other.getId() != null) || (this.getId() != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
     }
-
 }

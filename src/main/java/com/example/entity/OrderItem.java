@@ -6,11 +6,7 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedAttributeNode;
-import javax.persistence.NamedEntityGraph;
 import javax.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  *
@@ -18,13 +14,6 @@ import lombok.Setter;
  */
 @Entity
 @Table(name = "T_ORDER_ITEM")
-@Getter @Setter
-//@NamedEntityGraph(
-//        name = "OrderItem.hoge",
-//        attributeNodes = {
-//            @NamedAttributeNode(value = "item", subgraph = "Item.hoge")
-//        }
-//)
 public class OrderItem implements Serializable {
     private static final long serialVersionUID = 1L;
     
@@ -39,10 +28,52 @@ public class OrderItem implements Serializable {
     @JoinColumn(name = "item_id")
     private Item item;
 
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    /**
+     * @return the order
+     */
+    public Order getOrder() {
+        return order;
+    }
+
+    /**
+     * @param order the order to set
+     */
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    /**
+     * @return the item
+     */
+    public Item getItem() {
+        return item;
+    }
+
+    /**
+     * @param item the item to set
+     */
+    public void setItem(Item item) {
+        this.item = item;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (getId() != null ? getId().hashCode() : 0);
         return hash;
     }
 
@@ -53,7 +84,7 @@ public class OrderItem implements Serializable {
             return false;
         }
         OrderItem other = (OrderItem) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if ((this.getId() == null && other.getId() != null) || (this.getId() != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -61,7 +92,7 @@ public class OrderItem implements Serializable {
 
     @Override
     public String toString() {
-        return "com.example.entity.OrderItem[ id=" + id + " ]";
+        return "com.example.entity.OrderItem[ id=" + getId() + " ]";
     }
     
 }

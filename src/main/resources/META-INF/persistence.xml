@@ -7,7 +7,7 @@
         <shared-cache-mode>NONE</shared-cache-mode>
         <validation-mode>NONE</validation-mode>
         <properties>
-            <!--
+            <!-- 初回実行時のみ、このコメントを外してください
             <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
             <property name="javax.persistence.sql-load-script-source" value="META-INF/sql/insert_data.sql"/>
             -->
